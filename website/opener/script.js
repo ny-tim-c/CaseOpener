@@ -67,9 +67,15 @@ let cristmas_cest = [
   new Case_Items(2, "Dia_Sword", 0.4, 2),
   new Case_Items(1, "Wood_sword", 1, 1),
 ];
+let copper = [
+  new Case_Items(3, "Copper_Golem", 0.1, 3),
+  new Case_Items(2, "Copper_ingot", 0.4, 2),
+  new Case_Items(1, "Copper_nugget", 1, 1),
+];
 let Cases = [
   new Case("chest", cest),
-  new Case("cristmass_chest", cristmas_cest),
+  new Case("christmas", cristmas_cest),
+  new Case("copper", copper),
 ];
 //globa inventory
 let user = new User_class([], 0);
@@ -105,13 +111,13 @@ async function playAnimation(caseName) {
   if (chestActive === false) {
     chestActive = true;
     let animationPicture;
-    document.getElementById("gamblingPrevious2").src = "images/empty.png";
-    document.getElementById("gamblingPrevious").src = "images/empty.png";
-    document.getElementById("gamblingNext").src = "images/empty.png";
-    document.getElementById("gamblingNext2").src = "images/empty.png";
+    document.getElementById("gamblingPrevious2").src = "/images/empty.png";
+    document.getElementById("gamblingPrevious").src = "/images/empty.png";
+    document.getElementById("gamblingNext").src = "/images/empty.png";
+    document.getElementById("gamblingNext2").src = "/images/empty.png";
 
     for (i = 1; i < 9; i++) {
-      animationPicture = `images/${caseName}/animation/${i}.png`;
+      animationPicture = `/images/cases/${caseName}/animation/${i}.png`;
       document.getElementById("gamblingCurrent").src = animationPicture;
       await FRAME_DELAY(30);
     }
@@ -188,13 +194,14 @@ async function gambling(caseName) {
 
   DURABILITY = Math.random();
   console.log(item_id.value);
+  console.log(DURABILITY);
   const PRICE = Math.floor(item_id.value / DURABILITY);
+  console.log(PRICE);
 
   // display results
   document.getElementById("durabilityH1").textContent =
     `Durability: ${DURABILITY}`;
   document.getElementById("price").textContent = `Price: ${PRICE} Emeralds`;
-
   UpdateWallet(PRICE);
 
   chestActive = false;
