@@ -11,6 +11,8 @@ function wait(ms) {
 // get c parameter
 const params = new URLSearchParams(window.location.search);
 const caseName = params.get("c") || "default"; // fallback to "default" if missing
+const money = params.get("m") || "0";
+window.history.replaceState(null, "New Title", "Case opener"); // remove query params from URL
 
 // Set Constant of gambling button
 const button = document.getElementById("gamblingButton");
@@ -78,10 +80,13 @@ let Cases = [
   new Case("copper", copper),
 ];
 //globa inventory
-let user = new User_class([], 0);
-
+let user = new User_class([], parseInt(money));
+document.getElementById("wallet").textContent =
+  `Wallet: ${user.wallet} Emeralds`;
 // add/remove money
 function UpdateWallet(addedMoney) {
+  document.getElementById("wallet").textContent =
+    `Wallet: ${user.wallet} Emeralds`;
   user.wallet += addedMoney;
 }
 
@@ -205,4 +210,9 @@ async function gambling(caseName) {
   UpdateWallet(PRICE);
 
   chestActive = false;
+}
+
+function goToIndex() {
+  const where = `/website/index.html?m=${user.wallet}`;
+  window.location.href = where;
 }
